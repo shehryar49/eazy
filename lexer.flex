@@ -20,7 +20,7 @@
 %}
 
 %%
-[0-9]+  {tokens.push_back(Token(VALUE,yytext));}
+[0-9]+\.[0-9]+  {tokens.push_back(Token(VALUE,yytext));}
 if      {tokens.push_back(Token(KEYWORD,yytext));}
 else      {tokens.push_back(Token(KEYWORD,yytext));}
 elif      {tokens.push_back(Token(KEYWORD,yytext));}
