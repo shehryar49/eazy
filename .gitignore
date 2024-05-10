@@ -1,2 +1,6 @@
-a.out
-lex.yy.c
+eazy
+src/lex.yy.c
+src/parser.tab.h
+src/parser.tab.c
+src/parser.output
+*.o
