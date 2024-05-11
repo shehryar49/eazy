@@ -16,9 +16,21 @@ print      {return PRINT;}
 printstr      {return PRINTSTR;}
 var      {return VAR;}
 set      {return SET;}
+end      {return END;}
 [a-zA-Z_]+[0-9]* {return ID;}
+\+ {return ADD;}
+- {return SUB;}
+"*" {return MUL;}
+"/" {return DIV;}
+% {return MOD;}
+"<=" {return LTE;}
+"<" {return LT;}
+">=" {return GTE;}
+">" {return GT;}
+"==" {return EQ;}
+"!=" {return NOTEQ;}
 \"(.+)\" {return STR;}
-.|\n|\r {}
+.|\r|\n {}
 
 %%
 
