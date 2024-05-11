@@ -20,6 +20,8 @@ end      {return END;}
 [a-zA-Z_]+[0-9]* {return ID;}
 \+ {return ADD;}
 - {return SUB;}
+"(" {return LPAR;}
+")" {return RPAR;}
 "*" {return MUL;}
 "/" {return DIV;}
 % {return MOD;}
