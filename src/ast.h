@@ -40,7 +40,9 @@ typedef enum NodeType
 extern "C"{
 #endif
     Node* createNode(NodeType type,const char* val,Node* l,Node* r);
-    void prettyPrint(Node*);
+    void addChild(Node* node,Node* child);
+    void prettyPrint(Node*,int);
+    void deleteAST(Node*);
 #ifdef __cplusplus
 }
 #endif

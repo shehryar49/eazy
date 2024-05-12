@@ -7,6 +7,7 @@
     #include "ast.h"
     #define YYSTYPE Node*
     #include "parser.tab.h"
+    int line_num = 1;
 %}
 
 %%
@@ -36,7 +37,8 @@ dowhile {return DOWHILE;}
 "==" {return EQ;}
 "!=" {return NOTEQ;}
 \"(.+)\" {yylval = createNode(STR_NODE,yytext,NULL,NULL);return STR;}
-.|\r|\n {}
-
+" "|\r|\t 
+\n {line_num++;}
+. {printf("Line %d: Illegal character used in program: %s\n",line_num,yytext);exit(1);}
 %%
 

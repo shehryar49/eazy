@@ -6,6 +6,7 @@
     int yyerror(const char*);
     int yylex();
     extern char* yytext;
+    extern Node* ast;
     #define YYSTYPE Node*
 %}
 
@@ -42,7 +43,7 @@
 
 
 %%
-program: stmts {puts("valid program");$$ = createNode(PROGRAM_NODE,"PROGRAM",$1,NULL);prettyPrint($$);};
+program: stmts {puts("valid program");$$ = createNode(PROGRAM_NODE,"PROGRAM",$1,NULL);ast = $$;};
 stmts: %empty {$$ = NULL;}| stmt stmts {$$ = createNode(STMTS_NODE,"STMTS",$1,$2);};
 stmt: varStmt {$$ = createNode(STMT_NODE,"STMT",$1,NULL);}|
       printStmt {$$ = createNode(STMT_NODE,"STMT",$1,NULL);}|
@@ -58,13 +59,13 @@ stmt: varStmt {$$ = createNode(STMT_NODE,"STMT",$1,NULL);}|
 varStmt: VAR ID expr {$$ = createNode(VAR_NODE,"VAR",$2,$3);};
 printStmt: PRINT expr {$$ = createNode(PRINT_NODE,"PRINT",$2,NULL);};
 printStrStmt: PRINTSTR STR {$$ = createNode(PRINTSTR_NODE,"PRINTSTR",$2,NULL);};
-setStmt: SET ID expr {$$ = createNode(SET_NODE,"SET",$2,NULL);};
+setStmt: SET ID expr {$$ = createNode(SET_NODE,"SET",$2,$3);};
 ifStmt: IF LPAR expr RPAR stmts END {$$ = createNode(IF_NODE,"IF",$3,$5);};
-ifElseStmt: IF LPAR expr RPAR stmts ELSE stmts END {$$ = createNode(IFELSE_NODE,"IFELSE",NULL,NULL);};
-ifElifStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts END {$$ = createNode(IFELIF_NODE,"IFELIF",NULL,NULL);}; 
-ifElifElseStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts ELSE stmts END {$$ = createNode(IFELIFELSE_NODE,"IFELIFELSE",NULL,NULL);};
-whileStmt: WHILE LPAR expr RPAR stmts END {$$ = createNode(WHILE_NODE,"WHILE",NULL,NULL);};
-dowhileStmt: DOWHILE LPAR expr RPAR stmts END {$$ = createNode(DOWHILE_NODE,"DOWHILE",NULL,NULL);};
+ifElseStmt: IF LPAR expr RPAR stmts ELSE stmts END {$$ = createNode(IFELSE_NODE,"IFELSE",$3,$5);addChild($$,$7);};
+ifElifStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts END {$$ = createNode(IFELIF_NODE,"IFELIF",$3,$5);addChild($$,$8);addChild($$,$10);}; 
+ifElifElseStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts ELSE stmts END {$$ = createNode(IFELIFELSE_NODE,"IFELIFELSE",$3,$5);addChild($$,$8);addChild($$,$10);addChild($$,$12);};
+whileStmt: WHILE LPAR expr RPAR stmts END {$$ = createNode(WHILE_NODE,"WHILE",$3,$5);};
+dowhileStmt: DOWHILE LPAR expr RPAR stmts END {$$ = createNode(DOWHILE_NODE,"DOWHILE",$3,$5);};
 expr: ID {$$=$1;}|
       FLOAT {$$=$1;}|
       divExpr {$$=$1;} |

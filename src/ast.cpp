@@ -21,8 +21,11 @@ Node* createNode(NodeType type,const char* val,Node* l,Node* r)
         n->childs.push_back(r);
     return n;
 }
-int spaces = 0;
-void prettyPrint(Node * n)
+void addChild(Node* node,Node* child)
+{
+  node->childs.push_back(child);
+}
+void prettyPrint(Node * n,int spaces)
 {
     if(!n)
       return;
@@ -30,10 +33,17 @@ void prettyPrint(Node * n)
       fputc(' ',stdout);
     fputc('|',stdout);
     puts(n->val.c_str());
-    spaces += 2;
     for(auto child: n->childs)
     {
-        prettyPrint(child);
+        prettyPrint(child,spaces+2);
     }
-    spaces-=2;
+}
+
+void deleteAST(Node* ast)
+{
+  if(!ast)
+    return;
+  for(auto child: ast->childs)
+    deleteAST(child);
+  delete ast;
 }

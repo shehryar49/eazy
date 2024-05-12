@@ -1,1 +1,17 @@
-var i 1.0 + 2.0 == 3.0
+var i 1.0 + 2.0 == 3.0%5.0/2.0
+print i
+printstr "hello"
+if (1.0)
+    printstr "inside if"
+elif (2.0)
+    printstr "inside elif"
+else
+    printstr "not inside if"
+end
+
+while(i <= 10.0)
+    print i
+    set i i+1.0
+end
+
+
