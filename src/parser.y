@@ -36,6 +36,10 @@
 %token LPAR
 %token RPAR
 
+%left EQ NOTEQ LTE LT GT GTE
+%left SUB ADD
+%left DIV MUL MOD
+
 
 %%
 program: stmts {puts("valid program");$$ = createNode(PROGRAM_NODE,"PROGRAM",$1,NULL);prettyPrint($$);};
@@ -61,12 +65,12 @@ ifElifStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts END {$$ = createNo
 ifElifElseStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts ELSE stmts END {$$ = createNode(IFELIFELSE_NODE,"IFELIFELSE",NULL,NULL);};
 whileStmt: WHILE LPAR expr RPAR stmts END {$$ = createNode(WHILE_NODE,"WHILE",NULL,NULL);};
 dowhileStmt: DOWHILE LPAR expr RPAR stmts END {$$ = createNode(DOWHILE_NODE,"DOWHILE",NULL,NULL);};
-expr: FLOAT {$$ = $1;}|
-      ID {$$=$1;}|
+expr: ID {$$=$1;}|
+      FLOAT {$$=$1;}|
+      divExpr {$$=$1;} |
       addExpr {$$=$1;}| 
       subExpr {$$=$1;}| 
       mulExpr {$$=$1;}| 
-      divExpr {$$=$1;}|
       eqExpr  {$$=$1;}|
       noteqExpr {$$=$1;}|
       lteExpr {$$=$1;}|
@@ -74,17 +78,17 @@ expr: FLOAT {$$ = $1;}|
       gteExpr {$$=$1;}|
       gtExpr {$$=$1;}|
       modExpr {$$=$1;};
-addExpr: expr ADD FLOAT {$$ = createNode(ADD_NODE,"+",$1,$3);}| expr ADD ID {$$ = createNode(ADD_NODE,"+",$1,$3);};
-subExpr: expr SUB FLOAT {$$ = createNode(SUB_NODE,"-",$1,$3);}| expr SUB ID {$$ = createNode(SUB_NODE,"-",$1,$3);};
-mulExpr: expr MUL FLOAT {$$ = createNode(MUL_NODE,"*",$1,$3);}| expr MUL ID {$$ = createNode(MUL_NODE,"*",$1,$3);};
-divExpr: expr DIV FLOAT {$$ = createNode(DIV_NODE,"/",$1,$3);}| expr DIV ID {$$ = createNode(DIV_NODE,"/",$1,$3);};
-eqExpr: expr EQ FLOAT {$$ = createNode(EQ_NODE,"==",$1,$3);}| expr EQ ID {$$ = createNode(EQ_NODE,"==",$1,$3);};
-noteqExpr: expr NOTEQ FLOAT {$$ = createNode(NOTEQ_NODE,"!=",$1,$3);}| expr NOTEQ ID {$$ = createNode(NOTEQ_NODE,"!=",$1,$3);};
-ltExpr: expr LT FLOAT {$$ = createNode(LT_NODE,"<",$1,$3);}| expr LT ID {$$ = createNode(LT_NODE,"<",$1,$3);};
-lteExpr: expr LTE FLOAT {$$ = createNode(LTE_NODE,"<=",$1,$3);}| expr LTE ID {$$ = createNode(LTE_NODE,"<=",$1,$3);};
-gteExpr: expr GTE FLOAT {$$ = createNode(GTE_NODE,">=",$1,$3);}| expr GTE ID {$$ = createNode(GTE_NODE,">=",$1,$3);};
-gtExpr: expr GT FLOAT {$$ = createNode(GT_NODE,">",$1,$3);}| expr GT ID {$$ = createNode(GT_NODE,">",$1,$3);};
-modExpr: expr MOD FLOAT {$$ = createNode(MOD_NODE,"%",$1,$3);}| expr MOD ID {$$ = createNode(MOD_NODE,"%",$1,$3);};
+addExpr: expr ADD expr {$$ = createNode(ADD_NODE,"+",$1,$3);};
+divExpr: expr DIV expr {$$ = createNode(DIV_NODE,"/",$1,$3);};
+mulExpr: expr MUL expr {$$ = createNode(MUL_NODE,"*",$1,$3);};
+subExpr: expr SUB expr {$$ = createNode(SUB_NODE,"-",$1,$3);};
+ltExpr: expr LT expr {$$ = createNode(LT_NODE,"<",$1,$3);};
+lteExpr: expr LTE expr {$$ = createNode(LTE_NODE,"<=",$1,$3);};
+gtExpr: expr GT expr {$$ = createNode(GT_NODE,">",$1,$3);};
+gteExpr: expr GTE expr {$$ = createNode(GTE_NODE,">=",$1,$3);};
+eqExpr: expr EQ expr {$$ = createNode(EQ_NODE,"==",$1,$3);};
+noteqExpr: expr NOTEQ expr {$$ = createNode(NOTEQ_NODE,"!=",$1,$3);};
+modExpr: expr MOD expr {$$ = createNode(MOD_NODE,"%",$1,$3);};
 %%
 
 int yyerror(const char* msg)
