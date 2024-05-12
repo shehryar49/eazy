@@ -17,6 +17,8 @@ printstr      {return PRINTSTR;}
 var      {return VAR;}
 set      {return SET;}
 end      {return END;}
+while {return WHILE;}
+dowhile {return DOWHILE;}
 [a-zA-Z_]+[0-9]* {return ID;}
 \+ {return ADD;}
 - {return SUB;}

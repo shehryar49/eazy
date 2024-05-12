@@ -9,6 +9,8 @@
 %token IF
 %token ELIF
 %token ELSE
+%token WHILE
+%token DOWHILE
 %token END
 %token VAR
 %token PRINT
@@ -30,32 +32,32 @@
 %token MOD
 %token LPAR
 %token RPAR
+
 %%
 program: stmts {puts("valid program");};
 stmts: %empty | stmt stmts;
-stmt: varStmt | printStmt | setStmt | printStrStmt | ifStmt | ifElseStmt | ifElifStmt | ifElifElseStmt;
+stmt: varStmt | printStmt | setStmt | printStrStmt | ifStmt | ifElseStmt | ifElifStmt | ifElifElseStmt | whileStmt;
 varStmt: VAR ID FLOAT;
 printStmt: PRINT ID | PRINT FLOAT;
 printStrStmt: PRINTSTR STR;
-setStmt: SET ID FLOAT;
+setStmt: SET ID expr;
 ifStmt: IF LPAR expr RPAR stmts END;
-ifElseStmt: IF FLOAT stmts ELSE stmts END;
-ifElifStmt: IF FLOAT stmts ELIF FLOAT stmts END; 
-ifElifElseStmt: IF FLOAT stmts ELIF FLOAT stmts ELSE stmts END;
+ifElseStmt: IF LPAR expr RPAR stmts ELSE stmts END;
+ifElifStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts END; 
+ifElifElseStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts ELSE stmts END;
+whileStmt: WHILE LPAR expr RPAR stmts END;
 expr: FLOAT | ID | addExpr | subExpr | mulExpr | divExpr |eqExpr | noteqExpr | lteExpr | ltExpr | gteExpr | gtExpr | modExpr;
-addExpr: FLOAT ADD expr | ID ADD expr;
-subExpr: FLOAT SUB expr | ID SUB expr;
-mulExpr: FLOAT MUL expr | ID MUL expr;
-divExpr: FLOAT DIV expr | ID DIV expr;
-modExpr: FLOAT MOD expr | ID MOD expr;
-eqExpr: FLOAT EQ expr | ID EQ expr;
-noteqExpr: FLOAT NOTEQ expr | ID NOTEQ expr;
-ltExpr: FLOAT LT expr | ID LT expr;
-lteExpr: FLOAT LTE expr | ID LTE expr;
-gtExpr: FLOAT GT expr | ID GT expr;
-gteExpr: FLOAT GTE expr | ID GTE expr;
-
-
+addExpr: expr ADD FLOAT | expr ADD ID;
+subExpr: expr SUB FLOAT | expr SUB ID;
+mulExpr: expr MUL FLOAT | expr MUL ID;
+divExpr: expr DIV FLOAT | expr DIV ID;
+eqExpr: expr EQ FLOAT | expr EQ ID;
+noteqExpr: expr NOTEQ FLOAT | expr NOTEQ ID;
+ltExpr: expr LT FLOAT | expr LT ID;
+lteExpr: expr LTE FLOAT | expr LTE ID;
+gteExpr: expr GTE FLOAT | expr GTE ID;
+gtExpr: expr GT FLOAT | expr GT ID;
+modExpr: expr MOD FLOAT | expr MOD ID;
 %%
 
 int yyerror(const char* msg)
