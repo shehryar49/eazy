@@ -7,6 +7,7 @@
     int yylex();
     extern char* yytext;
     extern Node* ast;
+    extern int line_num;
     #define YYSTYPE Node*
 %}
 
@@ -94,6 +95,7 @@ modExpr: expr MOD expr {$$ = createNode(MOD_NODE,"%",$1,$3);};
 
 int yyerror(const char* msg)
 {
+    printf("Line %d\n",line_num);
     puts(msg);
     exit(1);
 }
