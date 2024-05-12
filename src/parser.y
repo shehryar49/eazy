@@ -36,9 +36,9 @@
 %%
 program: stmts {puts("valid program");};
 stmts: %empty | stmt stmts;
-stmt: varStmt | printStmt | setStmt | printStrStmt | ifStmt | ifElseStmt | ifElifStmt | ifElifElseStmt | whileStmt;
+stmt: varStmt | printStmt | setStmt | printStrStmt | ifStmt | ifElseStmt | ifElifStmt | ifElifElseStmt | whileStmt | dowhileStmt;
 varStmt: VAR ID FLOAT;
-printStmt: PRINT ID | PRINT FLOAT;
+printStmt: PRINT expr;
 printStrStmt: PRINTSTR STR;
 setStmt: SET ID expr;
 ifStmt: IF LPAR expr RPAR stmts END;
@@ -46,6 +46,7 @@ ifElseStmt: IF LPAR expr RPAR stmts ELSE stmts END;
 ifElifStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts END; 
 ifElifElseStmt: IF LPAR expr RPAR stmts ELIF LPAR expr RPAR stmts ELSE stmts END;
 whileStmt: WHILE LPAR expr RPAR stmts END;
+dowhileStmt: DOWHILE LPAR expr RPAR stmts END;
 expr: FLOAT | ID | addExpr | subExpr | mulExpr | divExpr |eqExpr | noteqExpr | lteExpr | ltExpr | gteExpr | gtExpr | modExpr;
 addExpr: expr ADD FLOAT | expr ADD ID;
 subExpr: expr SUB FLOAT | expr SUB ID;
