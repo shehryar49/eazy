@@ -19,6 +19,7 @@ Node* createNode(NodeType type,const char* val,Node* l,Node* r)
         n->childs.push_back(l);
     if(r)
         n->childs.push_back(r);
+    n->type = type;
     return n;
 }
 void addChild(Node* node,Node* child)
