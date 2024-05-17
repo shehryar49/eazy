@@ -1,15 +1,6 @@
 #include "ast.h"
-#include <string>
-#include <vector>
 
 using namespace std;
-
-struct Node
-{
-  string val;
-  NodeType type;
-  vector<Node*> childs;
-};
 
 Node* createNode(NodeType type,const char* val,Node* l,Node* r)
 {

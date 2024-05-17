@@ -45,6 +45,16 @@ extern "C"{
     void deleteAST(Node*);
 #ifdef __cplusplus
 }
+
+#include <string>
+#include <vector>
+
+struct Node {
+  std::string val;
+  NodeType type;
+  std::vector<Node*> childs;
+};
+
 #endif
 
 #endif
