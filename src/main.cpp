@@ -119,8 +119,12 @@ int main() {
 	builder.SetInsertPoint( basicBlock );
 
 	llvm::Value *irc = generateIRC( ast );
+	llvm::ConstantInt *retValue = llvm::ConstantInt::get( context, llvm::APInt( 4, 0, true ) );
+	builder.CreateRet( retValue );
 
 	module->print( llvm::outs(), nullptr );
+
+	delete module;
 
 	deleteAST( ast );
 	return 0;

@@ -4,3 +4,4 @@ src/parser.tab.h
 src/parser.tab.c
 src/parser.output
 *.o
+.vscode
