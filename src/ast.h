@@ -33,7 +33,9 @@ typedef enum NodeType
   DOWHILE_NODE,
   STMTS_NODE,
   STMT_NODE,
-  MOD_NODE
+  MOD_NODE,
+  AND_NODE,
+  OR_NODE,
 }NodeType;
 
 #ifdef __cplusplus

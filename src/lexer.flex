@@ -22,6 +22,8 @@ set      {return SET;}
 end      {return END;}
 while {return WHILE;}
 dowhile {return DOWHILE;}
+and {return AND;}
+or {return OR;}
 [a-zA-Z_]+[0-9]* {yylval = createNode(ID_NODE,yytext,NULL,NULL);return ID;}
 \+ {return ADD;}
 - {return SUB;}

@@ -4,8 +4,9 @@ all:
 	gcc -c src/lex.yy.c -g
 	gcc -c src/parser.tab.c -g
 	g++ -c src/ast.cpp -g
-	g++ -c `llvm-config --cxxflags` src/ast.cpp src/main.cpp `llvm-config --ldflags --libs core` -g
-	g++ `llvm-config --cxxflags` lex.yy.o main.o parser.tab.o ast.o -o eazy -lfl -g `llvm-config --ldflags --libs core`
+	g++ -c src/codegen.cpp -g
+	g++ -c src/main.cpp -g
+	g++ `llvm-config --cxxflags` lex.yy.o main.o parser.tab.o ast.o codegen.o -o eazy -lfl -g `llvm-config --ldflags --libs core`
 clean:
 	rm -f *.o
 	rm -f src/lex.yy.c

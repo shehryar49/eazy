@@ -37,14 +37,17 @@
 %token MOD
 %token LPAR
 %token RPAR
+%token AND
+%token OR
 
+%left AND OR
 %left EQ NOTEQ LTE LT GT GTE
 %left SUB ADD
 %left DIV MUL MOD
 
 
 %%
-program: stmts {puts("valid program");$$ = createNode(PROGRAM_NODE,"PROGRAM",$1,NULL);ast = $$;};
+program: stmts {$$ = createNode(PROGRAM_NODE,"PROGRAM",$1,NULL);ast = $$;};
 stmts: %empty {$$ = NULL;}| stmt stmts {$$ = createNode(STMTS_NODE,"STMTS",$1,$2);};
 stmt: varStmt {$$ = createNode(STMT_NODE,"STMT",$1,NULL);}|
       printStmt {$$ = createNode(STMT_NODE,"STMT",$1,NULL);}|
@@ -79,7 +82,10 @@ expr: ID {$$=$1;}|
       ltExpr {$$=$1;}|
       gteExpr {$$=$1;}|
       gtExpr {$$=$1;}|
-      modExpr {$$=$1;};
+      modExpr {$$=$1;}; |
+      andExpr {$$=$1;}; |
+      orExpr {$$=$1;};
+      
 addExpr: expr ADD expr {$$ = createNode(ADD_NODE,"+",$1,$3);};
 divExpr: expr DIV expr {$$ = createNode(DIV_NODE,"/",$1,$3);};
 mulExpr: expr MUL expr {$$ = createNode(MUL_NODE,"*",$1,$3);};
@@ -91,11 +97,14 @@ gteExpr: expr GTE expr {$$ = createNode(GTE_NODE,">=",$1,$3);};
 eqExpr: expr EQ expr {$$ = createNode(EQ_NODE,"==",$1,$3);};
 noteqExpr: expr NOTEQ expr {$$ = createNode(NOTEQ_NODE,"!=",$1,$3);};
 modExpr: expr MOD expr {$$ = createNode(MOD_NODE,"%",$1,$3);};
+andExpr: expr AND expr {$$ = createNode(AND_NODE,"and",$1,$3);};
+orExpr: expr OR expr {$$ = createNode(OR_NODE,"or",$1,$3);};
+
 %%
 
 int yyerror(const char* msg)
 {
     printf("Line %d\n",line_num);
     puts(msg);
-    exit(1);
+    exit(0);
 }

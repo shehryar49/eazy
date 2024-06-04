@@ -1,0 +1,15 @@
+var i 1.0
+while(i<=15.0)
+  if(i%3.0 == 0.0 and i%5.0 == 0.0)
+    printstr "FizzBuzz"
+  elif(i%5.0 == 0.0)
+    printstr "Buzz"
+  else
+    if(i%3.0 == 0.0)
+        printstr "Fizz"
+    else
+        print i
+    end
+  end
+  set i i+1.0
+end
