@@ -41,6 +41,6 @@ or {return OR;}
 \"(.+)\" {yylval = createNode(STR_NODE,yytext,NULL,NULL);return STR;}
 " "|\r|\t 
 \n {line_num++;}
-. {printf("Line %d: Illegal character used in program: %s\n",line_num,yytext);exit(1);}
+. {printf("Line %d: Illegal character used in program: '%s'\n",line_num,yytext);exit(1);}
 %%
 
