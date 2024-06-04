@@ -2,14 +2,12 @@ var lowerLimit 5.0
 var upperLimit 10.0
 var steps 100000.0
 
-var stepSize upperLimit - lowerLimit
-set stepSize stepSize / steps
+var stepSize ( upperLimit - lowerLimit ) / steps
 
 var sum 0.0
 var i lowerLimit
 while( i < steps )
-	var x lowerLimit + i * stepSize
-	set sum sum + 1.0 / x
+	set sum sum + 1.0 / ( lowerLimit + i * stepSize )
 	set i i + 1.0
 end
 
