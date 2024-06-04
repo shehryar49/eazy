@@ -84,7 +84,8 @@ expr: ID {$$=$1;}|
       gtExpr {$$=$1;}|
       modExpr {$$=$1;}; |
       andExpr {$$=$1;}; |
-      orExpr {$$=$1;};
+      orExpr {$$=$1;};  |
+      LPAR expr RPAR { $$ = $2; };
       
 addExpr: expr ADD expr {$$ = createNode(ADD_NODE,"+",$1,$3);};
 divExpr: expr DIV expr {$$ = createNode(DIV_NODE,"/",$1,$3);};

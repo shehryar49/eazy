@@ -1,4 +1,5 @@
-var i 100000.0
-var j 2.0
-set j j + i
-print j
+var i 10.0
+var j 5.0
+var k 40.0
+
+print ( i - j ) / ( k - ( 20.0 + j * i ) )
